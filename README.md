@@ -9,104 +9,79 @@
 
 ---
 
-## 🌟 强力推荐：DataEyesAI - 你的全能 AI 助手
-
-> **想要像 Claude Code 一样高效，却苦于没有稳定的 API 接入？**
-
-**[DataEyesAI](https://dataeyes.ai/?promoter_code=4qx9suz3)** 是为你量身打造的一站式 AI 聚合平台！
-
-- ⚡ **聚合全球顶尖模型**：一键接入 GPT-5、Claude 4.6、Gemini 3.1 等主流大模型。
-- 💰 **极致性价比**：官方原厂满血版 API，价格却极具竞争力，让你用最少的成本享受最强的 AI 能力。
-- 🛡️ **稳定可靠**：专业运维 7x24 小时守护，企业级 SLA 保障，告别连接断断续续的烦恼。
-- 🛠️ **开发者友好**：标准 API 接口，完美适配各类开源项目、CLI 工具及开发流程。
-
-👉 **[立即注册体验，开启你的 AI 生产力起飞之旅！](https://dataeyes.ai/?promoter_code=4qx9suz3)**
-
-👉 请点击：[https://dataeyes.ai/?promoter_code=4qx9suz3](https://dataeyes.ai/?promoter_code=4qx9suz3)
-
----
-
 > [!IMPORTANT]
-> **这是一个针对 `@anthropic-ai/claude-code` 2.1.88 版本的源码整理与重建项目。**
-> 该版本发布到 npm 时附带了可还原源码的 source map。本项目基于 `sources` 和 `sourcesContent` 将其还原为可读的源码目录，旨在研究 Claude Code 的 CLI 架构、命令系统及 MCP 实现。
+> **This is a source code recovery and reconstruction project for `@anthropic-ai/claude-code` version 2.1.88.**
+> This version was published to npm with source maps that allowed the original source to be reconstructed. This project uses the `sources` and `sourcesContent` fields to restore readable source directories, for the purpose of studying Claude Code's CLI architecture, command system, and MCP implementation.
 > 
-> 从 cli.js.map 还原后，一共有 70w 行代码
-> <img width="794" height="387" alt="图片" src="https://github.com/user-attachments/assets/ab30578b-d6d2-440c-abde-ddf09e5d42de" />
+> After recovery from cli.js.map, there are approximately 700,000 lines of code.
+> <img width="794" height="387" alt="image" src="https://github.com/user-attachments/assets/ab30578b-d6d2-440c-abde-ddf09e5d42de" />
 
 
-## 🚀 快速安装 (镜像源)
+## Quick Install (Mirror)
 
-背景：2026.03.31 claude code 上 npm 上传了包含 claude code 源码的 `cli.js.map` 文件
+Background: On 2026.03.31, Claude Code uploaded a `cli.js.map` file containing the full source code to npm.
 
-<img width="1497" height="242" alt="图片" src="https://github.com/user-attachments/assets/b1a01c8d-f14c-46d5-b6cb-4f5b4f90c9ab" />
+<img width="1497" height="242" alt="image" src="https://github.com/user-attachments/assets/b1a01c8d-f14c-46d5-b6cb-4f5b4f90c9ab" />
 
-
-由于 2.1.88 版本已从[官方 npm](https://www.npmjs.com/package/@anthropic-ai/claude-code/v/2.1.88?activeTab=code) 下架，直接使用 `npm install @anthropic-ai/claude-code@2.1.88` 会报错，你可以通过腾讯缓存镜像进行安装：
+Since version 2.1.88 has been removed from the [official npm registry](https://www.npmjs.com/package/@anthropic-ai/claude-code/v/2.1.88?activeTab=code), running `npm install @anthropic-ai/claude-code@2.1.88` directly will fail. You can install it via the Tencent cloud mirror cache:
 
 ```shell
 npm install -g https://mirrors.cloud.tencent.com/npm/@anthropic-ai/claude-code/-/claude-code-2.1.88.tgz
 ```
 
-<img width="626" height="370" alt="图片" src="https://github.com/user-attachments/assets/bcc1d094-f19d-4bd7-b53b-898399c6d117" />
+<img width="626" height="370" alt="image" src="https://github.com/user-attachments/assets/bcc1d094-f19d-4bd7-b53b-898399c6d117" />
 
-
-> 手慢无，不知道腾讯云的镜像缓存什么时候也没了
-
-
-可以关注我的公众号，行业第一手信息，都会发在文章中
-
-<img width="805" height="378" alt="图片" src="https://github.com/user-attachments/assets/360b9ab0-24f0-4806-87f4-921a239550d8" />
-
+> Act fast — there's no telling when the Tencent cloud mirror cache will also be taken down.
 
 ---
 
-## 项目结构概览
+## Project Structure Overview
 
-本项目以 `src/` 为核心，高度还原了原始代码组织：
+The project is centered around `src/`, closely mirroring the original code organization:
 
-- **`src/entrypoints/`** - CLI 入口与初始化逻辑
-- **`src/commands/`** - 强大的命令系统 (`login`, `mcp`, `review`, `tasks` 等)
-- **`src/components/`** - 基于 **React + Ink** 的终端 UI 组件
-- **`src/services/`** - 核心业务逻辑 (策略、同步、远程能力等)
-- **`src/hooks/`** - 交互式终端状态管理
-- **`src/utils/`** - 认证、文件操作、进程管理等工具函数
-- **`src/ink/`** - 定制的终端渲染基础设施
-
----
-
-## 源码亮点
-
-从还原的代码中，我们可以深入探索以下核心设计：
-
-- **命令装载机制**：支持内建命令、动态 skills、插件及 MCP 命令的混合装载。
-- **终端 UI 艺术**：如何利用 React 组件在终端中构建复杂的交互界面。
-- **MCP 深度集成**：Model Context Protocol 在 CLI 中的具体实现与应用。
-- **Feature Flags**：源码中随处可见的特性裁剪与构建期控制逻辑。
+- **`src/entrypoints/`** - CLI entry points and initialization logic
+- **`src/commands/`** - The command system (`login`, `mcp`, `review`, `tasks`, etc.)
+- **`src/components/`** - Terminal UI components built with **React + Ink**
+- **`src/services/`** - Core business logic (policies, sync, remote capabilities, etc.)
+- **`src/hooks/`** - Interactive terminal state management
+- **`src/utils/`** - Utility functions for auth, file operations, process management, etc.
+- **`src/ink/`** - Custom terminal rendering infrastructure
 
 ---
 
-## ⚠️ 免责声明
+## Source Code Highlights
 
-- **非官方项目**：本仓库并非 Anthropic 官方仓库，亦不代表其立场。
-- **版权说明**：原始代码的版权、商标及相关权利归原权利方（Anthropic）所有。
-- **研究用途**：本项目仅供归档、结构分析与源码阅读，不应被视为官方开源项目。
-- **法律风险**：如需二次发布或商用，请自行评估相关许可与法律风险。
+From the recovered code, we can explore the following core design patterns:
 
----
-
-## 后续计划 (待补齐)
-
-如果你想让它跑起来，建议按以下步骤尝试：
-1. 添加 `package.json` 并配置依赖。
-2. 补齐构建工具链。
-3. 处理 `bun:bundle` 宏与 feature flags。
-4. 验证核心命令的运行情况。
+- **Command loading mechanism**: Supports a hybrid loading system for built-in commands, dynamic skills, plugins, and MCP commands.
+- **Terminal UI art**: How React components are used to build complex interactive interfaces in the terminal.
+- **Deep MCP integration**: The concrete implementation and usage of Model Context Protocol within the CLI.
+- **Feature Flags**: Feature trimming and build-time control logic found throughout the source code.
 
 ---
 
-## 致谢
+## Disclaimer
 
-感谢发布时未移除的 **Source Map**，让这份精致的工程结构得以重现。
+- **Unofficial project**: This repository is not an official Anthropic repository and does not represent Anthropic's position.
+- **Copyright notice**: Copyright, trademarks, and related rights to the original code belong to the original rights holder (Anthropic).
+- **Research purposes only**: This project is intended solely for archival, structural analysis, and source code study, and should not be treated as an official open-source project.
+- **Legal risk**: If you intend to redistribute or use this commercially, please assess the relevant licensing and legal risks on your own.
+
+---
+
+## Next Steps (TODO)
+
+If you want to get it running, try the following steps:
+1. Add a `package.json` and configure dependencies.
+2. Set up the build toolchain.
+3. Handle `bun:bundle` macros and feature flags.
+4. Verify that core commands run correctly.
+
+---
+
+## Acknowledgments
+
+Thanks to the **Source Map** that wasn't removed before publishing — it allowed this elegant engineering structure to be reconstructed.
 
 ---
 
